@@ -27,15 +27,10 @@ module MovableTypeFormat
         keys.each do |key|
           name = key.downcase.gsub(/ /, "_")
           define_method name do
-            fields.find{|field| field.key == key}
+            find_or_create_field(key).value
           end
           define_method "#{name}=" do |v|
-            field = send(name)
-            unless field
-              field = Field.new(key)
-              fields << field
-            end
-            field.value = v
+            find_or_create_field(key).value = v
           end
         end
       end
@@ -72,6 +67,16 @@ module MovableTypeFormat
         buffer << fields.to_mt unless fields.empty?
         buffer << "#{body}\n" if body
         buffer << DELIMITER
+      end
+
+      private
+      def find_or_create_field(key)
+        field = fields.find{|field| field.key == key}
+        unless field
+          field = Field.new(key)
+          fields << field
+        end
+        field
       end
     end
   end

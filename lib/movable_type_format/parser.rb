@@ -37,9 +37,11 @@ module MovableTypeFormat
 
       while lines.next?
         case lines.peek
-        when "--------\n"
+        when Entry::DELIMITER
           lines.next
           break
+        when "\n" # ignore empty line between entries or sections
+          lines.next
         else
           sections << parse_section(lines)
         end
@@ -76,8 +78,9 @@ module MovableTypeFormat
             section.body << line
             context = :body
           end
-        when "-----\n"
+        when Section::Base::DELIMITER
           # end of section
+          section.body.chomp! if section.body
           return section
         else
           section.body ||= ""
@@ -85,8 +88,7 @@ module MovableTypeFormat
           context = :body
         end
       end
-      section.body.chomp! if section.body
-      section
+      raise "Section delimiter not found!"
     end
   end
 end
