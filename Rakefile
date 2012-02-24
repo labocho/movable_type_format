@@ -12,13 +12,15 @@ end
 require 'rake'
 
 require 'jeweler'
+require "#{File.dirname(__FILE__)}/lib/movable_type_format/version"
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "movable_type_format"
+  gem.version = MovableTypeFormat::VERSION
   gem.homepage = "http://github.com/labocho/movable_type_format"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Movable Type import / export format parser and builder for Ruby.}
+  gem.description = %Q{Movable Type import / export format parser and builder for Ruby.}
   gem.email = "labocho@penguinlab.jp"
   gem.authors = ["labocho"]
   # dependencies defined in Gemfile
