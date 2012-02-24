@@ -8,6 +8,7 @@ module MovableTypeFormat
       end
 
       def categories
+        fields.select{|f| f.key == "CATEGORY" }.map{|f| f.value}.freeze
       end
     end
   end

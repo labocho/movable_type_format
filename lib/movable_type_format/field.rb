@@ -4,7 +4,7 @@ require "date"
 module MovableTypeFormat
   class Field
     KEYS_FOR_METADATA = [
-      "AUTHOR", "TITLE", "BASENAME", "STATUS", "ALLOW", "COMMENTS", "ALLOW PINGS",
+      "AUTHOR", "TITLE", "BASENAME", "STATUS", "ALLOW COMMENTS", "ALLOW PINGS",
       "CONVERT BREAKS", "PRIMARY CATEGORY", "CATEGORY", "DATE", "TAGS", "NO ENTRY"
     ]
     KEYS_FOR_COMMENT = ["AUTHOR", "EMAIL", "URL", "IP", "DATE"]

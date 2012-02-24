@@ -36,6 +36,10 @@ module MovableTypeFormat
       end
     end
 
+    def categories
+      metadata.categories
+    end
+
     def metadata
       section = sections.find{|s| s.metadata? }
       unless section
