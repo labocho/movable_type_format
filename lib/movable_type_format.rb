@@ -5,5 +5,12 @@ module MovableTypeFormat
   autoload :Next, "movable_type_format/next"
   autoload :Parser, "movable_type_format/parser"
   autoload :Section, "movable_type_format/section"
-  extend Parser
+
+  def self.parse(string_or_io, &block)
+    if block
+      Parser.parse string_or_io, &block
+    else
+      Parser.parse string_or_io
+    end
+  end
 end

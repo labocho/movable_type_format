@@ -11,15 +11,13 @@ module MovableTypeFormat
         @entries = Parser.parse(@mt_string)
       end
       subject { @entries }
-      it { should be_a Collection }
+      it { should be_a Enumerator }
       context "first entry" do
         before(:each) do
           @entry = @entries.first
         end
-        it {
-          debugger
-          1
-        }
+        subject { @entry }
+        it { should be_an Entry}
       end
 
     end

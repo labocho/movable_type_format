@@ -3,12 +3,13 @@ require "time"
 require "date"
 module MovableTypeFormat
   class Field
-    KEYS = [
+    KEYS_FOR_METADATA = [
       "AUTHOR", "TITLE", "BASENAME", "STATUS", "ALLOW", "COMMENTS", "ALLOW PINGS",
-      "CONVERT BREAKS", "PRIMARY CATEGORY", "CATEGORY", "DATE", "TAGS", "NO ENTRY",
-      "AUTHOR", "EMAIL", "URL", "IP", "DATE", # for COMMENT
-      "TITLE", "URL", "IP", "BLOG NAME", "DATE", # for PING
-    ].uniq.freeze
+      "CONVERT BREAKS", "PRIMARY CATEGORY", "CATEGORY", "DATE", "TAGS", "NO ENTRY"
+    ]
+    KEYS_FOR_COMMENT = ["AUTHOR", "EMAIL", "URL", "IP", "DATE"]
+    KEYS_FOR_PING = ["TITLE", "URL", "IP", "BLOG NAME", "DATE"]
+    KEYS = (KEYS_FOR_METADATA + KEYS_FOR_COMMENT + KEYS_FOR_PING).uniq.freeze
     STATUS_VALUES = %w(draft publish future)
     ALLOW_COMMENTS_VALUES = %w(0 1)
     CONVERT_BREAKS_VALUES = %w(0 1 markdown markdown_with_smartypants richtext textile_2)

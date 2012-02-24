@@ -1,22 +1,36 @@
 module MovableTypeFormat
-  module Parser
-    module_function
-    def parse_file(file)
-    end
-
-    def parse(string)
-      lines = string.lines
-      lines.extend Next
-
-      entries = Collection.new
-
-      while lines.next?
-        entries << parse_entry(lines)
+  # parser = MovableTypeFormat::Parser.new(File.read("export.txt"))
+  # parser.parse do |entry|
+  #   # process for each entry
+  # end
+  # parser.rewind
+  # parser.parse.to_a
+  class Parser
+    def self.parse(string_or_io, &block)
+      if block
+        Parser.new(string_or_io).parse(&block)
+      else
+        Parser.new(string_or_io).parse
       end
-
-      entries
     end
 
+    def initialize(string_or_io)
+      @lines = string_or_io.lines
+      @lines.extend Next
+    end
+
+    def parse
+      return enum_for :parse unless block_given?
+      while @lines.next?
+        yield parse_entry(@lines)
+      end
+    end
+
+    def rewind
+      @lines.rewind
+    end
+
+    private
     def parse_entry(lines)
       sections = Collection.new
       current_field = nil
@@ -35,7 +49,7 @@ module MovableTypeFormat
     end
 
     def parse_section(lines)
-      section = Section.new
+      section = Section::Metadata.new
       context = :head # :fields, :body
 
       while line = lines.next_if_exists
@@ -45,7 +59,7 @@ module MovableTypeFormat
           key = $1
           case context
           when :head
-            section.name = key
+            section = Section::Base.build_by_name key
             context = :fields
           else
             section.fields << Field.new(key)
@@ -71,6 +85,7 @@ module MovableTypeFormat
           context = :body
         end
       end
+      section.body.chomp! if section.body
       section
     end
   end
