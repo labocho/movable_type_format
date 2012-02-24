@@ -8,5 +8,7 @@ require 'movable_type_format'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
-  
+  if defined? Debugger
+    Debugger.settings[:autoeval] = true
+  end
 end
