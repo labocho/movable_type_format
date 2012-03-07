@@ -66,7 +66,7 @@ module MovableTypeFormat
           else
             section.fields << Field.new(key)
           end
-        when /^([A-Z0-9 ]+): (.+)$/
+        when /^([A-Z0-9 ]+): (.*)$/
           # single line field or body
           key, value = $~.captures
           case context
