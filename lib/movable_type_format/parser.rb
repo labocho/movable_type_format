@@ -15,7 +15,7 @@ module MovableTypeFormat
     end
 
     def initialize(string_or_io)
-      @lines = string_or_io.lines
+      @lines = string_or_io.each_line
       @lines.extend Next
     end
 
