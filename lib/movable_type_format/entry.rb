@@ -56,7 +56,7 @@ module MovableTypeFormat
 
     def comments=(v)
       comments.each{|c| sections.delete c}
-      sections += v
+      self.sections += Collection.new(v)
     end
 
     def pings
@@ -65,7 +65,7 @@ module MovableTypeFormat
 
     def pings=(v)
       pings.each{|p| sections.delete p}
-      sections += v
+      self.sections += Collection.new(v)
     end
 
     def to_mt
