@@ -1,16 +1,16 @@
 PATH
   remote: .
   specs:
-    movable_type_format (0.1.0)
+    movable_type_format (0.1.1)
       activemodel (~> 3.2.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (3.2.22)
-      activesupport (= 3.2.22)
+    activemodel (3.2.22.5)
+      activesupport (= 3.2.22.5)
       builder (~> 3.0.0)
-    activesupport (3.2.22)
+    activesupport (3.2.22.5)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     builder (3.0.4)

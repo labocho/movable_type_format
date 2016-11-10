@@ -12,6 +12,25 @@ module MovableTypeFormat
       @sections ||= Collection.new
     end
 
+    def serialize
+      serialized = {}
+
+      ( Section::Base::NAMES_OF_SINGLE_SECTION +
+        MovableTypeFormat::Field::KEYS_FOR_METADATA).each do |s|
+        next if s == "CATEGORY"
+        method = s.downcase.gsub(/ /, "_")
+        if v = send(method)
+          serialized[method] = v
+        end
+      end
+
+      serialized["categories"] = categories if categories.any?
+      serialized["comments"] = comments.serialize if comments.any?
+      serialized["pings"] = pings.serialize if pings.any?
+
+      serialized
+    end
+
     Section::Base::NAMES_OF_SINGLE_SECTION.each do |section_name|
       name = section_name.downcase.gsub(/ /, "_")
       define_method name do
@@ -51,7 +70,7 @@ module MovableTypeFormat
     end
 
     def comments
-      sections.select{|s| s.name == "COMMENT" }.freeze
+      Collection.new(sections.select{|s| s.name == "COMMENT" }).freeze
     end
 
     def comments=(v)
@@ -60,7 +79,7 @@ module MovableTypeFormat
     end
 
     def pings
-      sections.select{|s| s.name == "PING" }.freeze
+      Collection.new(sections.select{|s| s.name == "PING" }).freeze
     end
 
     def pings=(v)

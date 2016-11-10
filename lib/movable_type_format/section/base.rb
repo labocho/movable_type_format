@@ -57,6 +57,13 @@ module MovableTypeFormat
         @name
       end
 
+      def serialize
+        { "name" => name,
+          "fields" => fields.inject({}){|h, f| h[f.key] = f.value; h },
+          "body" => body,
+        }
+      end
+
       def to_mt
         buffer = ""
         buffer << "#{name}:\n" unless metadata?

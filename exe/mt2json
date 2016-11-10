@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+require "movable_type_format"
+require "optparse"
+require "json"
+
+def sort_hash_keys(obj)
+  case obj
+  when Hash
+    obj.keys.sort.inject({}){|h, k| h[k] = sort_hash_keys(obj[k]); h }
+  when Array
+    obj.map{|a| sort_hash_keys(a) }
+  else
+    obj
+  end
+end
+
+options = {
+  compact_output: false,
+}
+OptionParser.new do |o|
+  o.on("-c", "--compact-output"){|b| options[:compact_output] = b }
+  o.parse!(ARGV)
+end
+
+entries = MovableTypeFormat::Parser.parse(ARGF).map{|e| sort_hash_keys(e.serialize) }
+if options[:compact_output]
+  puts JSON.generate(entries)
+else
+  puts JSON.pretty_generate(entries)
+end
