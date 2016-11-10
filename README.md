@@ -14,7 +14,36 @@ Format documentation is below.
     $ bundle install
     $ bundle exec rake install
 
-# Usage
+# mt2json
+
+`mt2json` command parse MovableType import /export format and format to JSON.
+
+    $ cat exported.txt | mt2json
+    [
+      {
+        "author": "Foo Bar",
+        "basename": "a-dummy-title",
+        "body": "This is the body.\n\nAnother paragraph here.\n\nAnother paragraph here.",
+        "categories": [
+          "News"
+        ],
+        "comments": [
+          {
+            "author": "Foo",
+    ...
+
+    # You can specify file instead of stdin.
+    $ mt2json exported.txt
+
+    # -h / --help option prints help
+    $ mt2json -h
+
+    # -c / --compact-output option outputs in a single line.
+    $ mt2json -c exported.txt
+
+
+
+# Usage of library
 
 ## Parse
 
