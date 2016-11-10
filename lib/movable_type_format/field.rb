@@ -56,10 +56,6 @@ module MovableTypeFormat
       end
     end
 
-    def inspect
-      to_mt
-    end
-
     def custom_field?
       key && key =~ /\ACF50_.+\z/
     end

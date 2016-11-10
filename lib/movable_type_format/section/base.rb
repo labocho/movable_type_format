@@ -57,10 +57,6 @@ module MovableTypeFormat
         @name
       end
 
-      def inspect
-        to_mt
-      end
-
       def to_mt
         buffer = ""
         buffer << "#{name}:\n" unless metadata?

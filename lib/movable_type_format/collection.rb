@@ -1,11 +1,11 @@
 module MovableTypeFormat
   class Collection < Array
-    def inspect
-      to_mt
+    def to_mt
+      map{|e| e.to_mt }.join
     end
 
-    def to_mt
-      map{|e| e.to_mt}.join
+    def +(another)
+      self.class.new(super)
     end
   end
 end

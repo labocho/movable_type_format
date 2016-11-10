@@ -8,10 +8,6 @@ module MovableTypeFormat
       entry
     end
 
-    def inspect
-      to_mt
-    end
-
     def sections
       @sections ||= Collection.new
     end
