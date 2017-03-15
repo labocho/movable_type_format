@@ -39,7 +39,7 @@ module MovableTypeFormat
       e.date = Time.utc(2003, 6, 23, 23, 34, 22)
       e.sections << Section::Comment.new({author: "Comment Author"}, "Comment")
 
-      expected = "{\"body\":\"Body\\nBody\",\"author\":\"Author\",\"title\":\"Title\",\"date\":\"2003-06-23 23:34:22 UTC\",\"comments\":[{\"author\":\"Comment Author\",\"body\":\"Comment\"}]}"
+      expected = '{"body":"Body\\nBody","author":"Author","title":"Title","date":"2003-06-23 23:34:22 UTC","comments":[{"author":"Comment Author","body":"Comment"}]}'
 
       e.serialize.to_json.should == expected
     end
