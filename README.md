@@ -1,5 +1,7 @@
 #  movable_type_format
 
+[![Build Status](https://travis-ci.org/labocho/movable_type_format.svg?branch=master)](https://travis-ci.org/labocho/movable_type_format)
+
 Movable Type import / export format parser and builder for Ruby.
 
 Format documentation is below.
