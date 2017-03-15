@@ -113,10 +113,11 @@ module MovableTypeFormat
       return unless string
       string =~ DATE_REGEXP
       m, d, y, h, min, s, am_pm = $~.captures
-      if am_pm == " PM"
-        h = h.to_i + 12
+      m, d, y, h, min, s = [m, d, y, h, min, s].map(&:to_i)
+      if am_pm == " PM" and h < 12
+        h = h + 12
       end
-      Time.new(y.to_i, m.to_i, d.to_i, h.to_i, min.to_i, s.to_i)
+      Time.new(y, m, d, h, min, s)
     end
 
     def parse_tags(string)
