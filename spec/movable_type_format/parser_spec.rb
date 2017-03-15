@@ -59,6 +59,11 @@ module MovableTypeFormat
         two.title.should == "Two"
         two.body.should == "Body Two"
       end
+      it "has date" do
+          first, second = subject.to_a
+          first.date.should == Time.new(2002, 1, 31, 15, 31, 05)
+          second.date.should == Time.new(2002, 1, 31, 03, 31, 05)
+      end
     end
   end
 end
