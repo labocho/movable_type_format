@@ -113,31 +113,31 @@ module MovableTypeFormat
         ping.body.should == "\nDATE: 10/28/2004 12:35:59 PM"
       end
       it "has date" do
-          first, second = subject.to_a
-          first.date.should == Time.new(2002, 1, 31, 15, 31, 05)
-          second.date.should == Time.new(2002, 1, 31, 03, 31, 05)
+        first, second = subject.to_a
+        first.date.should == Time.new(2002, 1, 31, 15, 31, 05)
+        second.date.should == Time.new(2002, 1, 31, 03, 31, 05)
       end
       it "parses pm date correctly" do
-          mt = <<-MT
-          TITLE: One
-          DATE: 10/27/2004 12:35:59 PM
-          -----
-          BODY:
-          Body
-          -----
+        mt = <<-MT
+        TITLE: One
+        DATE: 10/27/2004 12:35:59 PM
+        -----
+        BODY:
+        Body
+        -----
 
-          EXCERPT:
-          Excerpt
-          -----
+        EXCERPT:
+        Excerpt
+        -----
 
-          --------
-          MT
-          mt.gsub!(/^ +/, "")
+        --------
+        MT
+        mt.gsub!(/^ +/, "")
 
-          entries = MovableTypeFormat.parse(mt).to_a
-          entries.count.should == 1
-          one = entries[0]
-          one.date.should == Time.new(2004, 10, 27, 12, 35, 59)
+        entries = MovableTypeFormat.parse(mt).to_a
+        entries.count.should == 1
+        one = entries[0]
+        one.date.should == Time.new(2004, 10, 27, 12, 35, 59)
       end
     end
   end
