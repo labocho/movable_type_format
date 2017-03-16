@@ -33,7 +33,7 @@ module MovableTypeFormat
     private
     def parse_entry(lines)
       sections = Collection.new
-      current_field = nil
+      meta = true
 
       while lines.next?
         case lines.peek
@@ -43,14 +43,15 @@ module MovableTypeFormat
         when "\n" # ignore empty line between entries or sections
           lines.next
         else
-          sections << parse_section(lines)
+          sections << parse_section(lines, meta)
+          meta = false
         end
       end
 
       Entry.build_by_sections sections
     end
 
-    def parse_section(lines)
+    def parse_section(lines, meta)
       section = Section::Metadata.new
       context = :head # :fields, :body
 
@@ -83,6 +84,7 @@ module MovableTypeFormat
           section.body.chomp! if section.body
           return section
         else
+          next if meta && line.strip == "" # ignore empty line in metadata section
           section.body ||= ""
           section.body << line
           context = :body

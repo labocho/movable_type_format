@@ -59,6 +59,59 @@ module MovableTypeFormat
         two.title.should == "Two"
         two.body.should == "Body Two"
       end
+      it "ignore empty line in metadata" do
+        mt = <<-MT
+        TITLE: One
+
+        DATE: 10/27/2004 12:35:59 PM
+        -----
+        BODY:
+        Body
+        -----
+        --------
+        TITLE: Two
+
+        DATE: 10/28/2004 12:35:59 PM
+        -----
+        BODY:
+        Body Two
+        -----
+        --------
+        MT
+        mt.gsub!(/^ +/, "")
+
+        entries = MovableTypeFormat.parse(mt).to_a
+        entries.count.should == 2
+        one, two = entries
+        one.title.should == "One"
+        one.body.should == "Body"
+        one.date.should == Time.new(2004, 10, 27, 12, 35, 59)
+        two.title.should == "Two"
+        two.body.should == "Body Two"
+        two.date.should == Time.new(2004, 10, 28, 12, 35, 59)
+      end
+      it "treat empty line as beginning of body in ping" do
+        mt = <<-MT
+        TITLE: One
+        -----
+        PING:
+        TITLE: Date in body
+
+        DATE: 10/28/2004 12:35:59 PM
+        -----
+        --------
+        MT
+        mt.gsub!(/^ +/, "")
+
+        entries = MovableTypeFormat.parse(mt).to_a
+        entries.count.should == 1
+        one = entries[0]
+        one.title.should == "One"
+        ping = one.pings[0]
+        ping.title.should == "Date in body"
+        ping.date.should == nil
+        ping.body.should == "\nDATE: 10/28/2004 12:35:59 PM"
+      end
       it "has date" do
           first, second = subject.to_a
           first.date.should == Time.new(2002, 1, 31, 15, 31, 05)
