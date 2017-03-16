@@ -64,6 +64,28 @@ module MovableTypeFormat
           first.date.should == Time.new(2002, 1, 31, 15, 31, 05)
           second.date.should == Time.new(2002, 1, 31, 03, 31, 05)
       end
+      it "parses pm date correctly" do
+          mt = <<-MT
+          TITLE: One
+          DATE: 10/27/2004 12:35:59 PM
+          -----
+          BODY:
+          Body
+          -----
+
+          EXCERPT:
+          Excerpt
+          -----
+
+          --------
+          MT
+          mt.gsub!(/^\s+/, "")
+
+          entries = MovableTypeFormat.parse(mt).to_a
+          entries.count.should == 1
+          one = entries[0]
+          one.date.should == Time.new(2004, 10, 27, 12, 35, 59)
+      end
     end
   end
 end
