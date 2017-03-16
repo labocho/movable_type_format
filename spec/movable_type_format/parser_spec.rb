@@ -48,7 +48,7 @@ module MovableTypeFormat
 
         --------
         MT
-        mt.gsub!(/^\s+/, "")
+        mt.gsub!(/^ +/, "")
 
         entries = MovableTypeFormat.parse(mt).to_a
         entries.count.should == 2
@@ -132,7 +132,7 @@ module MovableTypeFormat
 
           --------
           MT
-          mt.gsub!(/^\s+/, "")
+          mt.gsub!(/^ +/, "")
 
           entries = MovableTypeFormat.parse(mt).to_a
           entries.count.should == 1
